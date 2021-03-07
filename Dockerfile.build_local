@@ -1,0 +1,10 @@
+FROM qmkfm/base_container AS build-stage
+
+VOLUME /qmk_firmware
+WORKDIR /qmk_firmware
+COPY . .
+
+RUN make <manu>/<keeb>/<reev>:<you>
+
+FROM scratch AS export-stage
+COPY --from=build-stage /qmk_firmware/.build/*.hex /
